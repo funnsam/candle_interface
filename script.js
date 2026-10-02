@@ -10,7 +10,7 @@ function startSocket() {
         socket.close();
     }
 
-    socket = new WebSocket(`ws://${ip}/status`);
+    socket = new WebSocket(`wss://${ip}/status`);
     socket.onopen = () => {
         ping_interval = setInterval(() => {
             if (socket.readyState === WebSocket.OPEN) {
