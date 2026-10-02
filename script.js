@@ -72,6 +72,9 @@ function updateInfo(s) {
         last_refresh = s.refresh.last;
     }
 
+    heap_free_span.innerText = s.heap.free.toLocaleString();
+    heap_min_free_span.innerText = s.heap.min_free.toLocaleString();
+
     error_dialog.close();
     restart_btn.disabled = false;
 }
@@ -80,13 +83,13 @@ startSocket();
 error_reconnect.onclick = () => startSocket();
 
 refresh_btn.onclick = e => {
-    fetch(`http://${ip}/refresh`, { method: "POST" })
+    fetch(`https://${ip}/refresh`, { method: "POST" })
         .then(() => {})
         .catch(() => {});
     e.currentTarget.disabled = true;
 };
 restart_btn.onclick = e => {
-    fetch(`http://${ip}/restart`, { method: "POST" })
+    fetch(`https://${ip}/restart`, { method: "POST" })
         .then(() => {})
         .catch(() => {});
     e.currentTarget.disabled = true;
