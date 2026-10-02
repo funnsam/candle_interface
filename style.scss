@@ -1,0 +1,145 @@
+@use "m3.scss";
+@use "sass:color";
+
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@100..900&display=swap");
+
+* {
+    box-sizing: border-box;
+    font-family: "Noto Sans HK", sans-serif;
+    accent-color: m3.$primary;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+
+    background: m3.$surface;
+    color: m3.$on-surface;
+}
+
+body {
+    margin: 0;
+    padding: 16px;
+
+    &:has(div) {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    & > div {
+        display: flex;
+        flex-direction: column;
+        padding: 16px;
+        border: 1px solid m3.$outline;
+        border-radius: 8px;
+        overflow: auto;
+
+        & > hr {
+            border: 0;
+            color: m3.$outline-variant;
+            background: m3.$outline-variant;
+            width: 100%;
+            height: 1px;
+        }
+    }
+}
+
+a {
+    color: inherit;
+}
+
+div {
+    gap: 8px;
+}
+
+#control_div {
+    display: grid;
+    grid-template-columns: max-content auto;
+    grid-auto-rows: minmax(2em, max-content);
+    grid-gap: 4px 16px;
+    align-items: center;
+
+    & > input, & > select {
+        width: 100%;
+        height: 75%;
+    }
+
+    & > input:is([type=checkbox], [type=radio]) {
+        margin-right: auto;
+        width: auto;
+    }
+
+    & > :not(label, input, select) {
+        grid-column-start: span 2;
+    }
+}
+
+dialog {
+    border: 0;
+    background: m3.$surface-container-high;
+    color: m3.$on-surface-variant;
+    min-width: 280px;
+    max-width: 560px;
+    padding: 24px;
+    border-radius: 28px;
+
+    &::backdrop {
+        background: color.change(m3.$scrim, $alpha: 0.38);
+    }
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
+
+    & > h1 {
+        margin: 0 0 16px 0;
+        color: m3.$on-surface;
+        line-height: m3.pt(32);
+        font-size: m3.pt(24);
+        font-weight: 400;
+    }
+
+    & > div.actions {
+        display: flex;
+        justify-content: end;
+        gap: 8px;
+        margin-top: 24px;
+
+        & > button {
+            color: m3.$primary;
+            line-height: m3.pt(20);
+            font-size: m3.pt(14);
+            font-weight: 500;
+            background: transparent !important;
+        }
+    }
+}
+
+@mixin any_input() {
+    padding: 4px;
+    color: inherit;
+    border-radius: 4px;
+    border: none;
+    font-size: inherit;
+}
+
+button {
+    @include any_input();
+}
+
+button {
+    @include m3.state(m3.$secondary-container, m3.$on-secondary-container);
+    color: m3.$on-secondary-container;
+    cursor: pointer;
+
+    &.filled {
+        @include m3.state(m3.$primary, m3.$on-primary);
+        color: m3.$on-primary;
+    }
+}
