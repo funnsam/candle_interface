@@ -3,12 +3,29 @@ let ip = window.location.hash.substring(1), socket, ping_interval;
 function showError(msg) {
     error_span.innerText = msg;
     error_dialog.showModal();
+    reconnect_dialog.close();
 }
+
+error_reconnect.onclick = () => startSocket();
+
+refresh_btn.onclick = e => {
+    fetch(`https://${ip}/refresh`, { method: "POST" })
+        .then(() => {})
+        .catch(() => {});
+    e.currentTarget.disabled = true;
+};
+restart_btn.onclick = e => {
+    fetch(`https://${ip}/restart`, { method: "POST" })
+        .then(() => {})
+        .catch(() => {});
+    e.currentTarget.disabled = true;
+};
 
 function startSocket() {
     if (typeof socket === WebSocket) {
         socket.close();
     }
+    reconnect_dialog.show();
 
     socket = new WebSocket(`wss://${ip}/status`);
     socket.onopen = () => {
@@ -52,8 +69,6 @@ function formatDuration(d) {
 
 var last_refresh;
 function updateInfo(s) {
-    uptime_span.innerText = formatDuration(s.uptime);
-
     const time = new Date(s.time.year,
         s.time.month,
         s.time.month_day_index + 1,
@@ -62,6 +77,9 @@ function updateInfo(s) {
         s.time.seconds,
     );
     system_time_span.innerText = dayjs(time).format("YYYY-MM-DD HH:mm:ss");
+    uptime_span.innerText = formatDuration(s.uptime);
+
+    last_error_span.innerText = s.last_error || "N/A";
 
     last_update_span.innerText = formatDuration(s.uptime - s.refresh.last);
     next_update_span.innerText = formatDuration(s.refresh.next - s.uptime);
@@ -76,21 +94,8 @@ function updateInfo(s) {
     heap_min_free_span.innerText = s.heap.min_free.toLocaleString();
 
     error_dialog.close();
+    reconnect_dialog.close();
     restart_btn.disabled = false;
 }
 
 startSocket();
-error_reconnect.onclick = () => startSocket();
-
-refresh_btn.onclick = e => {
-    fetch(`https://${ip}/refresh`, { method: "POST" })
-        .then(() => {})
-        .catch(() => {});
-    e.currentTarget.disabled = true;
-};
-restart_btn.onclick = e => {
-    fetch(`https://${ip}/restart`, { method: "POST" })
-        .then(() => {})
-        .catch(() => {});
-    e.currentTarget.disabled = true;
-};

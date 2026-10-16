@@ -17,6 +17,10 @@
 
         <hr>
 
+        <div><b>錯誤信息:</b> <span id="last_error_span"></span></div>
+
+        <hr>
+
         <div><b>上次畫面更新:</b> <span id="last_update_span"></span> 前</div>
         <div><b>下次畫面更新:</b> 大約 <span id="next_update_span"></span> 後
             (每隔約 <span id="interval_span"></span>)
@@ -31,13 +35,17 @@
         <button onclick="startSocket()">重新連接</button>
     </div>
 
-    <dialog id="error_dialog" closedby="none">
+    <dialog id="error_dialog" class="dialog" closedby="none">
         <h1>錯誤</h1>
         意外地與裝置斷線: <span id="error_span"></span>
         <div class="actions">
             <button id="error_reconnect" command="close" commandfor="error_dialog">重新連接</button>
             <button command="close" commandfor="error_dialog">確定</button>
         </div>
+    </dialog>
+    <dialog id="reconnect_dialog" class="snackbar">
+        重新連接中
+        <button class="icon" command="close" commandfor="reconnect_dialog">&#x2715;</button>
     </dialog>
     <script src="script.js"></script>
 </body>

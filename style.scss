@@ -12,6 +12,7 @@
 html, body {
     width: 100%;
     height: 100%;
+    overflow: hide;
 }
 
 html {
@@ -58,7 +59,13 @@ div {
     gap: 8px;
 }
 
+#info_div {
+    flex: 2;
+}
+
 #control_div {
+    flex: 1;
+
     display: grid;
     grid-template-columns: max-content auto;
     grid-auto-rows: minmax(2em, max-content);
@@ -80,13 +87,14 @@ div {
     }
 }
 
-dialog {
-    border: 0;
+.dialog {
+    min-width: min(280px, 100%);
+    max-width: min(560px, 100%);
+    padding: 24px;
+
     background: m3.$surface-container-high;
     color: m3.$on-surface-variant;
-    min-width: 280px;
-    max-width: 560px;
-    padding: 24px;
+    border: 0;
     border-radius: 28px;
 
     &::backdrop {
@@ -121,6 +129,45 @@ dialog {
     }
 }
 
+.snackbar[open] {
+    display: flex;
+    align-items: center;
+
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+
+    min-width: min(400px, calc(100% - 32px));
+    max-width: min(1000px, calc(100% - 32px));
+    min-height: m3.pt(48);
+    max-height: m3.pt(68);
+    padding: m3.pt(8);
+
+    background: m3.$inverse-surface;
+    color: m3.$inverse-on-surface;
+    border: 0;
+    border-radius: m3.pt(4);
+
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
+
+    & > button.icon {
+        justify-self: end;
+        width: m3.pt(24);
+        height: m3.pt(24);
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+
+        background: transparent;
+        color: m3.$inverse-on-surface;
+        margin: 0 0 0 auto;
+        padding: m3.pt(4);
+    }
+}
+
 @mixin any_input() {
     padding: 4px;
     color: inherit;
@@ -141,5 +188,11 @@ button {
     &.filled {
         @include m3.state(m3.$primary, m3.$on-primary);
         color: m3.$on-primary;
+    }
+}
+
+@media (min-width: 700px) {
+    body:has(div) {
+        flex-direction: row;
     }
 }
