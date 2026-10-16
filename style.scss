@@ -140,14 +140,15 @@ div {
 
     min-width: min(400px, calc(100% - 32px));
     max-width: min(1000px, calc(100% - 32px));
-    min-height: m3.pt(48);
-    max-height: m3.pt(68);
-    padding: m3.pt(8);
+    min-height: 48px;
+    max-height: 68px;
+    margin: 0;
+    padding: 8px;
 
     background: m3.$inverse-surface;
     color: m3.$inverse-on-surface;
     border: 0;
-    border-radius: m3.pt(4);
+    border-radius: 4px;
 
     &:focus:not(:focus-visible) {
         outline: none;
@@ -155,8 +156,8 @@ div {
 
     & > button.icon {
         justify-self: end;
-        width: m3.pt(24);
-        height: m3.pt(24);
+        width: 24px;
+        height: 24px;
         display: inline-flex;
         justify-content: center;
         align-items: center;
@@ -164,7 +165,7 @@ div {
         background: transparent;
         color: m3.$inverse-on-surface;
         margin: 0 0 0 auto;
-        padding: m3.pt(4);
+        padding: 4px;
     }
 }
 
